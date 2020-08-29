@@ -8,4 +8,6 @@
     <string name="ingredient_hint">Введите название ингредиента</string>
     <string name="plus">+</string>
     <string name="add_ingredient">Добавить ингредиент +</string>
+    <string name="search">Поиск</string>
+    <string name="ingredients">Ингредиенты</string>
 </resources>
