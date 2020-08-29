@@ -30,3 +30,5 @@ fun convertArrayToString(array: ArrayList<String>): String? {
 }
 
 fun convertStringToArray(string: String) =  ArrayList(string.split(strSeparator))
+
+fun String.second() = get(1)
