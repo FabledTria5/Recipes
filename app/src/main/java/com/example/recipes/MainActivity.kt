@@ -4,15 +4,12 @@ import android.content.Intent
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -26,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         dataBaseHelper = DataBaseHelper(this)
-        recipesAdapter = RecipesAdapter(dataBaseHelper.fillMainRv(), this)
+        recipesAdapter = RecipesAdapter(dataBaseHelper.getRecipes(), this)
 
         rv_recipes_list.apply {
             adapter = recipesAdapter
@@ -60,12 +57,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
-        return true
-    }
+        val item = menu?.findItem(R.id.search)
+        val searchView = item?.actionView as SearchView
+        searchView.queryHint = "Введите ингредиент"
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        openAdminLogin()
-        return super.onOptionsItemSelected(item)
+            override fun onQueryTextChange(newText: String?): Boolean {
+                recipesAdapter.filter.filter(newText)
+                return false
+            }
+        })
+        return true
     }
 
     override fun onResume() {
@@ -79,18 +84,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun clearIntent() = intent.removeExtra("Created")
 
-    fun updateAdapter() {
-        recipesAdapter = RecipesAdapter(dataBaseHelper.fillMainRv(), this)
+    private fun updateAdapter() {
+        recipesAdapter = RecipesAdapter(dataBaseHelper.getRecipes(), this)
         rv_recipes_list.adapter = recipesAdapter
     }
 
     private fun addRecipe() {
         val intent = Intent(this, RecipeCreation::class.java)
         startActivity(intent)
-    }
-
-    private fun openAdminLogin() {
-        Toast.makeText(this, "Еще не сделано", Toast.LENGTH_LONG).show()
     }
 
 }
