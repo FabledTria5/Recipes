@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/admin_button"
+        android:icon="@drawable/ic_admin_24"
+        android:title="Панель админа"
+        app:showAsAction="ifRoom"/>
+
+</menu>

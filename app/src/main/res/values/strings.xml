@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Книга рецептов</string>
+    <string name="title">Заголовок</string>
+    <string name="description">Описание</string>
+    <string name="recipe_name_hint">Введите название рецепта</string>
+    <string name="recipe_description_hint">Кратко опишите рецепт</string>
+    <string name="create">Создать</string>
+    <string name="ingredient_hint">Введите название ингредиента</string>
+    <string name="plus">+</string>
+    <string name="add_ingredient">Добавить ингредиент +</string>
+</resources>
