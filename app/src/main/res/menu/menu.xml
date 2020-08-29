@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/admin_button"
-        android:icon="@drawable/ic_admin_24"
-        android:title="Панель админа"
-        app:showAsAction="ifRoom"/>
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search_white_24"
+        android:title="@string/search"
+        app:showAsAction="always|collapseActionView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
 </menu>
