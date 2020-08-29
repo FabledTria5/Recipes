@@ -38,7 +38,7 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
         onCreate(db)
     }
 
-    fun fillMainRv(): ArrayList<Recipe> {
+    fun getRecipes(): ArrayList<Recipe> {
 
         val recipesList = arrayListOf<Recipe>()
         val queryString = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_DELETED = 0"
