@@ -10,4 +10,6 @@
     <string name="add_ingredient">Добавить ингредиент +</string>
     <string name="search">Поиск</string>
     <string name="ingredients">Ингредиенты</string>
+    <string name="recipe_image">recipe_image</string>
+    <string name="ingredients_list">Ингредиенты:</string>
 </resources>
