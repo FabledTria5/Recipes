@@ -2,6 +2,7 @@ package com.example.recipes
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +44,15 @@ class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val co
         }
     }
 
-    override fun onBindViewHolder(holder: RecipesViewHolder, position: Int) = holder.bind(position)
+    override fun onBindViewHolder(holder: RecipesViewHolder, position: Int) {
+        holder.bind(position)
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, FullRecipe::class.java)
+            intent.putExtra("Recipe", recipesForUI[holder.adapterPosition])
+            context.startActivity(intent)
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = RecipesViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.recipy_item, parent, false))
 
