@@ -43,7 +43,7 @@ class RecipeCreation : AppCompatActivity(), View.OnClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, photo: Intent?) {
         super.onActivityResult(requestCode, resultCode, photo)
 
-        when(requestCode) {
+        when (requestCode) {
             1 -> if (resultCode == RESULT_OK && photo != null) {
                 try {
                     val imageUri = photo.data
@@ -78,18 +78,11 @@ class RecipeCreation : AppCompatActivity(), View.OnClickListener {
 
     private fun createRecipe() {
 
-         if (selectedImage == null)
+        if (selectedImage == null)
             selectedImage = (iv_pick_image.drawable as BitmapDrawable).bitmap
 
         dataBaseHelper.addRecipeToTable(
-            Recipe(
-                et_recipe_name.text.toString(),
-                et_recipe_description.text.toString(),
-                getIngredients(),
-                convertToBase64(
-                    selectedImage
-                )
-            )
+            Recipe(et_recipe_name.text.toString(), et_recipe_description.text.toString(), getIngredients(), convertToBase64(selectedImage))
         )
     }
 
@@ -101,16 +94,10 @@ class RecipeCreation : AppCompatActivity(), View.OnClickListener {
 
             val ingredientName = recipeView.findViewById<EditText>(R.id.et_ingredient_name).text.toString()
 
-            if (ingredientName != "") {
+            if (ingredientName != "")
                 ingredients.add(ingredientName)
-            } else {
-                Toast.makeText(
-                    this,
-                    "Ошибка при создании рецепта! Ингредиент $i не может быть пустым.",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-
+            else
+                Toast.makeText(this,"Ошибка при создании рецепта! Ингредиент $i не может быть пустым.", Toast.LENGTH_LONG).show()
             i++
         }
 
