@@ -6,8 +6,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.recipes.utils.convertToBitmap
 import kotlinx.android.synthetic.main.recipe_full_view.*
-import java.lang.Exception
-import java.lang.NullPointerException
 
 class FullRecipe() : AppCompatActivity() {
 
