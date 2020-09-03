@@ -81,9 +81,10 @@ class RecipeCreation : AppCompatActivity(), View.OnClickListener {
         if (selectedImage == null)
             selectedImage = (iv_pick_image.drawable as BitmapDrawable).bitmap
 
-        dataBaseHelper.addRecipeToTable(
-            Recipe(et_recipe_name.text.toString(), et_recipe_description.text.toString(), getIngredients(), convertToBase64(selectedImage))
-        )
+        if (et_full_recipe.text == null || et_recipe_name.text == null)
+            Toast.makeText(this,"Ошибка при создании рецепта. Поля с названием рецепта и его полным описанием должны быть заполнены", Toast.LENGTH_LONG).show()
+         else
+            dataBaseHelper.addRecipeToTable(Recipe(et_recipe_name.text.toString(), et_recipe_description.text.toString(), getIngredients(), convertToBase64(selectedImage), et_full_recipe.text.toString()))
     }
 
     private fun getIngredients(): ArrayList<String> {
