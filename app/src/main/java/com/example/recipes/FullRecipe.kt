@@ -6,6 +6,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.recipes.utils.convertToBitmap
 import kotlinx.android.synthetic.main.recipe_full_view.*
+import java.lang.Exception
+import java.lang.NullPointerException
 
 class FullRecipe() : AppCompatActivity() {
 
@@ -19,6 +21,7 @@ class FullRecipe() : AppCompatActivity() {
         tv_recipe_description.text = recipe.description
         setIngredientsList(recipe.ingredients)
         iv_recipe_image.setImageBitmap(convertToBitmap(recipe.picture))
+        tv_full_recipe.text = recipe.fullRecipe
     }
 
     @SuppressLint("SetTextI18n")
