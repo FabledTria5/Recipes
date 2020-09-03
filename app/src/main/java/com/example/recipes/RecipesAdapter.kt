@@ -36,10 +36,10 @@ class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val co
             recipeDescription.text = recipe.description
             recipeImage.setImageBitmap(convertToBitmap(recipe.picture))
 
-            if (recipe.ingredients.size > 1) {
-                recipeIngredients.text = "${recipe.ingredients.toString().second().toUpperCase()}${recipe.ingredients.toString().subSequence(2, recipe.ingredients.toString().length - 2)}"
-            } else {
-                recipeIngredients.text = "Ингредиенты не указаны"
+            when {
+                recipe.ingredients.size in 2..3 -> recipe.ingredients.forEach { recipeIngredients.text = "${recipeIngredients.text}$it; "}
+                recipe.ingredients.size > 3 -> recipeIngredients.text = "${recipe.ingredients[0]}; ${recipe.ingredients[1]}; ${recipe.ingredients[2]}"
+                else -> recipeIngredients.text = "Ингредиенты не указаны"
             }
         }
     }
