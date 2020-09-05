@@ -23,7 +23,6 @@ class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val co
     inner class RecipesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val recipeName: TextView = itemView.findViewById(R.id.recipe_name)
-        private val recipeDescription: TextView = itemView.findViewById(R.id.recipe_description)
         private val recipeImage: CircleImageView = itemView.findViewById(R.id.civ_recipe_image)
         private val recipeIngredients: TextView = itemView.findViewById(R.id.tv_ingredients_string)
 
@@ -33,7 +32,6 @@ class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val co
             val recipe = recipesForUI[position]
 
             recipeName.text = recipe.name
-            recipeDescription.text = recipe.description
             recipeImage.setImageBitmap(convertToBitmap(recipe.picture))
 
             when {
