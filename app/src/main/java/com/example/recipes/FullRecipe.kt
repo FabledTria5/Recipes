@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.recipes.utils.convertToBitmap
 import kotlinx.android.synthetic.main.recipe_full_view.*
 
-class FullRecipe() : AppCompatActivity() {
+class FullRecipe : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
