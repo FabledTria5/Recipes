@@ -11,7 +11,6 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipes.utils.convertToBitmap
-import com.example.recipes.utils.second
 import com.google.android.material.snackbar.Snackbar
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -19,6 +18,7 @@ class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val co
 
     private val dataBaseHelper = DataBaseHelper(context)
     private var recipesAll : ArrayList<Recipe> = dataBaseHelper.getRecipes()
+    private var index = -1
 
     inner class RecipesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -47,7 +47,7 @@ class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val co
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, FullRecipe::class.java)
-            intent.putExtra("Recipe", recipesForUI[holder.adapterPosition])
+            intent.putExtra("Recipe", recipesForUI[position])
             context.startActivity(intent)
         }
     }
