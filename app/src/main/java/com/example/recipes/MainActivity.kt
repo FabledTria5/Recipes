@@ -8,11 +8,14 @@ import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.recipes.util_classes.SpacesItemDecoration
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,10 +29,16 @@ class MainActivity : AppCompatActivity() {
         dataBaseHelper = DataBaseHelper(this)
         recipesAdapter = RecipesAdapter(dataBaseHelper.getRecipes(), this)
 
+        val spacingPixels = (20 * resources.displayMetrics.density).roundToInt()
+        val spanCount = 2
+        val includeEdge = true
+
         rv_recipes_list.apply {
             adapter = recipesAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity)
+            layoutManager = GridLayoutManager(this@MainActivity, 2)
         }
+
+        rv_recipes_list.addItemDecoration(SpacesItemDecoration(spanCount, spacingPixels, includeEdge))
 
         val itemTouchHelperCallBack = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder) = false
