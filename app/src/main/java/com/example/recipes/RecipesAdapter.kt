@@ -13,7 +13,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipes.utils.convertToBitmap
 import com.google.android.material.snackbar.Snackbar
-import de.hdodenhof.circleimageview.CircleImageView
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val context: Context) : RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder>(), Filterable {
 
@@ -69,7 +70,7 @@ class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val co
                 filteredRecipesList.addAll(recipesAll)
             } else {
                 for (ingredient in recipesAll) {
-                    if (ingredient.ingredients.toString().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                    if (ingredient.ingredients.toString().toLowerCase(Locale.ROOT).contains(constraint.toString().toLowerCase(Locale.ROOT))) {
                         filteredRecipesList.add(ingredient)
                     }
                 }
