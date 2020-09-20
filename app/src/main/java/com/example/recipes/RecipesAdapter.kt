@@ -20,7 +20,6 @@ class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val co
 
     private val dataBaseHelper = DataBaseHelper(context)
     private var recipesAll : ArrayList<Recipe> = dataBaseHelper.getRecipes()
-    private var index = -1
 
     inner class RecipesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
