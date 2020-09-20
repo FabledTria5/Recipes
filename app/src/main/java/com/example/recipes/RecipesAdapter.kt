@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipes.utils.convertToBitmap
@@ -23,7 +24,7 @@ class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val co
     inner class RecipesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val recipeName: TextView = itemView.findViewById(R.id.recipe_name)
-        private val recipeImage: CircleImageView = itemView.findViewById(R.id.civ_recipe_image)
+        private val recipeImage: ImageView = itemView.findViewById(R.id.iv_recipe_image)
         private val recipeIngredients: TextView = itemView.findViewById(R.id.tv_ingredients_string)
 
         @SuppressLint("SetTextI18n")
@@ -33,6 +34,7 @@ class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val co
 
             recipeName.text = recipe.name
             recipeImage.setImageBitmap(convertToBitmap(recipe.picture))
+            recipeIngredients.text = ""
 
             when {
                 recipe.ingredients.size in 2..3 -> recipe.ingredients.forEach { recipeIngredients.text = "${recipeIngredients.text}$it; "}
