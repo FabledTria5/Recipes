@@ -6,15 +6,12 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipes.utils.convertToBitmap
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.recipy_item.view.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val context: Context) : RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder>(), Filterable {
 
@@ -51,6 +48,26 @@ class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val co
             val intent = Intent(context, FullRecipe::class.java)
             intent.putExtra("Recipe", recipesForUI[position])
             context.startActivity(intent)
+        }
+
+        holder.itemView.tv_view_options.setOnClickListener {
+            val popup = PopupMenu(context, it)
+
+            popup.inflate(R.menu.options_menu)
+
+            popup.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.opt_delete -> {
+                        Toast.makeText(context, "Deleted", Toast.LENGTH_LONG).show()
+                    }
+                    R.id.opt_edit -> {
+
+                    }
+                }
+                false
+            }
+
+            popup.show()
         }
     }
 
