@@ -15,4 +15,6 @@
     <string name="enter_full_recipe">Введите полный рецепт</string>
     <string name="dots">⋮</string>
     <string name="recipe_img">Фото рецепта</string>
+    <string name="delete">Удалить</string>
+    <string name="edit">Редактировать</string>
 </resources>
