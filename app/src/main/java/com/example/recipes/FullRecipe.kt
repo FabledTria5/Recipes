@@ -22,7 +22,7 @@ class FullRecipe : AppCompatActivity() {
         tv_full_recipe.text = recipe.fullRecipe
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "InflateParams")
     private fun setIngredientsList(ingredients: ArrayList<String>) {
 
         ingredients.forEach {

@@ -4,13 +4,11 @@ import android.content.Intent
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.Menu
-import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipes.util_classes.SpacesItemDecoration
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
@@ -22,6 +20,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recipesAdapter: RecipesAdapter
     private lateinit var dataBaseHelper: DataBaseHelper
 
+    private val spanCount = 2
+    private val includeEdge = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,14 +30,12 @@ class MainActivity : AppCompatActivity() {
         dataBaseHelper = DataBaseHelper(this)
         recipesAdapter = RecipesAdapter(dataBaseHelper.getRecipes(), this)
 
-        val spacingPixels = (20 * resources.displayMetrics.density).roundToInt()
-        val spanCount = 2
-        val includeEdge = true
-
         rv_recipes_list.apply {
             adapter = recipesAdapter
             layoutManager = GridLayoutManager(this@MainActivity, 2)
         }
+
+        val spacingPixels = (10 * resources.displayMetrics.density).roundToInt()
 
         rv_recipes_list.addItemDecoration(SpacesItemDecoration(spanCount, spacingPixels, includeEdge))
 

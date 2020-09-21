@@ -6,20 +6,17 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipes.utils.convertToBitmap
 import com.google.android.material.snackbar.Snackbar
-import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.recipy_item.view.*
+import java.util.*
 
 class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val context: Context) : RecyclerView.Adapter<RecipesAdapter.RecipesViewHolder>(), Filterable {
 
     private val dataBaseHelper = DataBaseHelper(context)
     private var recipesAll : ArrayList<Recipe> = dataBaseHelper.getRecipes()
-    private var index = -1
 
     inner class RecipesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -52,6 +49,26 @@ class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val co
             intent.putExtra("Recipe", recipesForUI[position])
             context.startActivity(intent)
         }
+
+        holder.itemView.tv_view_options.setOnClickListener {
+            val popup = PopupMenu(context, it)
+
+            popup.inflate(R.menu.options_menu)
+
+            popup.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.opt_delete -> {
+                        Toast.makeText(context, "Deleted", Toast.LENGTH_LONG).show()
+                    }
+                    R.id.opt_edit -> {
+
+                    }
+                }
+                false
+            }
+
+            popup.show()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = RecipesViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.recipy_item, parent, false))
@@ -69,7 +86,7 @@ class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val co
                 filteredRecipesList.addAll(recipesAll)
             } else {
                 for (ingredient in recipesAll) {
-                    if (ingredient.ingredients.toString().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                    if (ingredient.ingredients.toString().toLowerCase(Locale.ROOT).contains(constraint.toString().toLowerCase(Locale.ROOT))) {
                         filteredRecipesList.add(ingredient)
                     }
                 }
