@@ -13,4 +13,6 @@
     <string name="recipe_image">recipe_image</string>
     <string name="ingredients_list">Ингредиенты:</string>
     <string name="enter_full_recipe">Введите полный рецепт</string>
+    <string name="dots">⋮</string>
+    <string name="recipe_img">Фото рецепта</string>
 </resources>
