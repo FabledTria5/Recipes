@@ -58,10 +58,10 @@ class RecipesAdapter(private var recipesForUI: ArrayList<Recipe>, private val co
             popup.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.opt_delete -> {
-                        Toast.makeText(context, "Deleted", Toast.LENGTH_LONG).show()
+                        removeRecipe(holder)
                     }
                     R.id.opt_edit -> {
-
+                        Toast.makeText(context, "Not yet implemented", Toast.LENGTH_SHORT).show()
                     }
                 }
                 false
