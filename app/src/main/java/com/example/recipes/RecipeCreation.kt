@@ -31,9 +31,6 @@ class RecipeCreation : AppCompatActivity(), View.OnClickListener {
         btn_add.setOnClickListener(this)
         btn_create_recipe.setOnClickListener {
             createRecipe()
-            val intent = Intent(this, MainActivity::class.java)
-                .putExtra("Created", true)
-            startActivity(intent)
         }
 
         iv_pick_image.setOnClickListener { pickImage() }
@@ -81,10 +78,15 @@ class RecipeCreation : AppCompatActivity(), View.OnClickListener {
 
         if (selectedImage == null) selectedImage = (iv_pick_image.drawable as BitmapDrawable).bitmap
 
-        if (et_full_recipe.text == null || et_recipe_name.text == null)
-            Toast.makeText(this,"Ошибка при создании рецепта. Поля с названием рецепта и его полным описанием должны быть заполнены", Toast.LENGTH_LONG).show()
-         else
+        if (et_recipe_name.text.toString() == "") {
+            Toast.makeText(this,"Ошибка при создании рецепта. Поле с названием рецепта должно быть заполнено!", Toast.LENGTH_LONG).show()
+        }
+         else {
             dataBaseHelper.addRecipeToTable(Recipe(et_recipe_name.text.toString(), et_recipe_description.text.toString(), getIngredients(), convertToBase64(selectedImage), et_full_recipe.text.toString()))
+            val intent = Intent(this, MainActivity::class.java)
+                .putExtra("Created", true)
+            startActivity(intent)
+        }
     }
 
     private fun getIngredients(): ArrayList<String> {
@@ -95,10 +97,8 @@ class RecipeCreation : AppCompatActivity(), View.OnClickListener {
 
             val ingredientName = recipeView.findViewById<EditText>(R.id.et_ingredient_name).text.toString()
 
-            if (ingredientName != "")
-                ingredients.add(ingredientName)
-            else
-                Toast.makeText(this,"Ошибка при создании рецепта! Ингредиент $i не может быть пустым.", Toast.LENGTH_LONG).show()
+            if (ingredientName != "") ingredients.add(ingredientName)
+
             i++
         }
 
