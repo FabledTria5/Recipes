@@ -12,7 +12,7 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
 
     companion object {
         const val DATABASE_NAME = "recipes.db"
-        const val DATABASE_VERSION = 15
+        const val DATABASE_VERSION = 19
 
         const val TABLE_NAME = "RECIPES_TABLE"
         const val COLUMN_RECIPE_IMAGE = "RECIPE_IMAGE"
@@ -79,7 +79,7 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
     }
 
     fun removeRecipe(recipeName: String) {
-        writableDatabase.execSQL("DELETE FROM $TABLE_NAME WHERE $COLUMN_DELETED = 1")
+        deleteRemovedRecipe()
 
         writableDatabase.execSQL("UPDATE $TABLE_NAME SET $COLUMN_DELETED = 1 WHERE $COLUMN_RECIPE_NAME = '$recipeName'")
         deletedRecipeName = recipeName
@@ -87,5 +87,9 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
 
     fun restoreRecipe() {
         writableDatabase.execSQL("UPDATE $TABLE_NAME SET $COLUMN_DELETED = 0 WHERE $COLUMN_RECIPE_NAME = '$deletedRecipeName'")
+    }
+
+    fun deleteRemovedRecipe() {
+        writableDatabase.execSQL("DELETE FROM $TABLE_NAME WHERE $COLUMN_DELETED = 1")
     }
 }

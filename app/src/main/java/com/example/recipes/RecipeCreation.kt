@@ -26,6 +26,7 @@ class RecipeCreation : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.recipe_creation)
 
         dataBaseHelper = DataBaseHelper(this)
+        dataBaseHelper.deleteRemovedRecipe()
 
         btn_add.setOnClickListener(this)
         btn_create_recipe.setOnClickListener {
@@ -78,8 +79,7 @@ class RecipeCreation : AppCompatActivity(), View.OnClickListener {
 
     private fun createRecipe() {
 
-        if (selectedImage == null)
-            selectedImage = (iv_pick_image.drawable as BitmapDrawable).bitmap
+        if (selectedImage == null) selectedImage = (iv_pick_image.drawable as BitmapDrawable).bitmap
 
         if (et_full_recipe.text == null || et_recipe_name.text == null)
             Toast.makeText(this,"Ошибка при создании рецепта. Поля с названием рецепта и его полным описанием должны быть заполнены", Toast.LENGTH_LONG).show()
