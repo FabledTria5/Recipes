@@ -85,11 +85,7 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
         deletedRecipeName = recipeName
     }
 
-    fun restoreRecipe() {
-        writableDatabase.execSQL("UPDATE $TABLE_NAME SET $COLUMN_DELETED = 0 WHERE $COLUMN_RECIPE_NAME = '$deletedRecipeName'")
-    }
+    fun restoreRecipe() = writableDatabase.execSQL("UPDATE $TABLE_NAME SET $COLUMN_DELETED = 0 WHERE $COLUMN_RECIPE_NAME = '$deletedRecipeName'")
 
-    fun deleteRemovedRecipe() {
-        writableDatabase.execSQL("DELETE FROM $TABLE_NAME WHERE $COLUMN_DELETED = 1")
-    }
+    fun deleteRemovedRecipe() = writableDatabase.execSQL("DELETE FROM $TABLE_NAME WHERE $COLUMN_DELETED = 1")
 }
