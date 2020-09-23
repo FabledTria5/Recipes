@@ -30,34 +30,14 @@ class MainActivity : AppCompatActivity() {
         dataBaseHelper = DataBaseHelper(this)
         recipesAdapter = RecipesAdapter(dataBaseHelper.getRecipes(), this)
 
+        val spacingPixels = (10 * resources.displayMetrics.density).roundToInt()
+
         rv_recipes_list.apply {
             adapter = recipesAdapter
             layoutManager = GridLayoutManager(this@MainActivity, 2)
         }
 
-        val spacingPixels = (10 * resources.displayMetrics.density).roundToInt()
-
         rv_recipes_list.addItemDecoration(SpacesItemDecoration(spanCount, spacingPixels, includeEdge))
-
-        val itemTouchHelperCallBack = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder) = false
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                recipesAdapter.removeRecipe(viewHolder)
-            }
-
-            override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
-                RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                    .addSwipeRightBackgroundColor(ContextCompat.getColor(baseContext, R.color.colorDelete))
-                    .addSwipeRightActionIcon(R.drawable.ic_baseline_delete_white_24)
-                    .create()
-                    .decorate()
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-            }
-        }
-
-        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallBack)
-        itemTouchHelper.attachToRecyclerView(rv_recipes_list)
 
         btn_create.setOnClickListener {
             addRecipe()
