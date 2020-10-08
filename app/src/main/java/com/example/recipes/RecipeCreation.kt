@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.recipes.utils.convertToBase64
 import kotlinx.android.synthetic.main.recipe_creation.*
 import java.io.FileNotFoundException
-import java.util.*
 
 class RecipeCreation : AppCompatActivity(), View.OnClickListener {
 
@@ -82,11 +81,28 @@ class RecipeCreation : AppCompatActivity(), View.OnClickListener {
             Toast.makeText(this,"Ошибка при создании рецепта. Поле с названием рецепта должно быть заполнено!", Toast.LENGTH_LONG).show()
         }
          else {
-            dataBaseHelper.addRecipeToTable(Recipe(et_recipe_name.text.toString(), et_recipe_description.text.toString(), getIngredients(), convertToBase64(selectedImage), et_full_recipe.text.toString()))
+            dataBaseHelper.addRecipeToTable(Recipe(et_recipe_name.text.toString(), et_recipe_description.text.toString(), getIngredients(), getIngredientsAmount(), convertToBase64(selectedImage), et_full_recipe.text.toString()))
             val intent = Intent(this, MainActivity::class.java)
                 .putExtra("Created", true)
             startActivity(intent)
         }
+    }
+
+    private fun getIngredientsAmount(): ArrayList<String> {
+        val ingredientsAmount: ArrayList<String> = arrayListOf()
+        var i = 0
+        while (i < layout_list.childCount) {
+            val recipeView = layout_list.getChildAt(i)
+            val ingredientAmount = recipeView.findViewById<EditText>(R.id.et_ingredients_amount).text.toString()
+            if (ingredientAmount != "")
+                ingredientsAmount.add(ingredientAmount)
+            else
+                ingredientsAmount.add("N/A")
+
+            i++
+        }
+
+        return ingredientsAmount
     }
 
     private fun getIngredients(): ArrayList<String> {
@@ -94,7 +110,6 @@ class RecipeCreation : AppCompatActivity(), View.OnClickListener {
         var i = 0
         while (i < layout_list.childCount) {
             val recipeView = layout_list.getChildAt(i)
-
             val ingredientName = recipeView.findViewById<EditText>(R.id.et_ingredient_name).text.toString()
 
             if (ingredientName != "") ingredients.add(ingredientName)
