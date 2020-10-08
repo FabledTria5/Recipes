@@ -12,13 +12,14 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
 
     companion object {
         const val DATABASE_NAME = "recipes.db"
-        const val DATABASE_VERSION = 19
+        const val DATABASE_VERSION = 20
 
         const val TABLE_NAME = "RECIPES_TABLE"
         const val COLUMN_RECIPE_IMAGE = "RECIPE_IMAGE"
         const val COLUMN_RECIPE_NAME = "RECIPE_NAME"
         const val COLUMN_RECIPE_DESCRIPTION = "RECIPE_DESCRIPTION"
         const val COLUMN_INGREDIENTS = "INGREDIENTS"
+        const val COLUMN_INGREDIENTS_AMOUNT = "INGREDIENTS_AMOUNT"
         const val COLUMN_FULL_RECIPE = "FULL_RECIPE"
         const val COLUMN_DELETED = "is_deleted"
     }
@@ -28,7 +29,7 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
     override fun onCreate(db: SQLiteDatabase?) {
 
         val createRecipesTableStatement =
-            "CREATE TABLE $TABLE_NAME ($COLUMN_RECIPE_NAME TEXT UNIQUE, $COLUMN_RECIPE_DESCRIPTION TEXT, $COLUMN_INGREDIENTS TEXT, $COLUMN_RECIPE_IMAGE TEXT, $COLUMN_FULL_RECIPE TEXT, $COLUMN_DELETED INTEGER)"
+            "CREATE TABLE $TABLE_NAME ($COLUMN_RECIPE_NAME TEXT UNIQUE, $COLUMN_RECIPE_DESCRIPTION TEXT, $COLUMN_INGREDIENTS TEXT, $COLUMN_INGREDIENTS_AMOUNT TEXT, $COLUMN_RECIPE_IMAGE TEXT, $COLUMN_FULL_RECIPE TEXT, $COLUMN_DELETED INTEGER)"
 
         db?.execSQL(createRecipesTableStatement)
 
@@ -51,10 +52,11 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
                 val recipeName = cursor.getString(0)
                 val recipeDescription = cursor.getString(1)
                 val recipeIngredients = cursor.getString(2)
-                val recipeImage = cursor.getString(3)
-                val fullRecipe = cursor.getString(4)
+                val recipeIngredientsAmount = cursor.getString(3)
+                val recipeImage = cursor.getString(4)
+                val fullRecipe = cursor.getString(5)
 
-                val newRecipe = Recipe(recipeName, recipeDescription, convertStringToArray(recipeIngredients), recipeImage, fullRecipe)
+                val newRecipe = Recipe(recipeName, recipeDescription, convertStringToArray(recipeIngredients), convertStringToArray(recipeIngredientsAmount), recipeImage, fullRecipe)
                 recipesList.add(newRecipe)
             } while (cursor.moveToNext())
         }
@@ -71,6 +73,7 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,
         cv.put(COLUMN_RECIPE_NAME, recipe.name)
         cv.put(COLUMN_RECIPE_DESCRIPTION, recipe.description)
         cv.put(COLUMN_INGREDIENTS, convertArrayToString(recipe.ingredients))
+        cv.put(COLUMN_INGREDIENTS_AMOUNT, convertArrayToString(recipe.ingredientsAmount))
         cv.put(COLUMN_RECIPE_IMAGE, recipe.picture)
         cv.put(COLUMN_FULL_RECIPE, recipe.fullRecipe)
         cv.put(COLUMN_DELETED, 0)
