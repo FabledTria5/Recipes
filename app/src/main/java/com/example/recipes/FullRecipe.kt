@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.recipes.utils.convertToBitmap
 import kotlinx.android.synthetic.main.recipe_full_view.*
+import java.util.ArrayList
 
 class FullRecipe : AppCompatActivity() {
 
@@ -17,21 +18,20 @@ class FullRecipe : AppCompatActivity() {
 
         tv_recipe_name.text = recipe.name
         tv_recipe_description.text = recipe.description
-        setIngredientsList(recipe.ingredients)
+        setIngredients(recipe.ingredients, recipe.ingredientsAmount)
         iv_recipe_image.setImageBitmap(convertToBitmap(recipe.picture))
         tv_full_recipe.text = recipe.fullRecipe
     }
 
-    @SuppressLint("SetTextI18n", "InflateParams")
-    private fun setIngredientsList(ingredients: ArrayList<String>) {
-
+    private fun setIngredients(ingredients: ArrayList<String>, ingredientsAmount: ArrayList<String>) {
         ingredients.forEach {
             val ingredientView = layoutInflater.inflate(R.layout.simple_ingredient, null, false)
-
             val ingredientName = ingredientView.findViewById<TextView>(R.id.tv_ingredient_name)
+            val ingredientAmount = ingredientView.findViewById<TextView>(R.id.tv_ingredient_amount)
 
             ingredients_list.addView(ingredientView)
-            ingredientName.text = it
+            ingredientName.text  = it
+            ingredientAmount.text = ingredientsAmount[ingredients.indexOf(it)]
         }
     }
 
