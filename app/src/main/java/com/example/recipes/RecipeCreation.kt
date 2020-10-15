@@ -1,11 +1,14 @@
 package com.example.recipes
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
@@ -13,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.recipes.utils.convertToBase64
 import kotlinx.android.synthetic.main.recipe_creation.*
 import java.io.FileNotFoundException
+
 
 class RecipeCreation : AppCompatActivity(), View.OnClickListener {
 
@@ -23,6 +27,7 @@ class RecipeCreation : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recipe_creation)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         dataBaseHelper = DataBaseHelper(this)
         dataBaseHelper.deleteRemovedRecipe()
@@ -56,11 +61,16 @@ class RecipeCreation : AppCompatActivity(), View.OnClickListener {
 
     private fun addView() {
         val ingredientView = layoutInflater.inflate(R.layout.add_ingredient_view, null, false)
+        val ingredientName = ingredientView.findViewById<EditText>(R.id.et_ingredient_name)
 
         imageView = ingredientView.findViewById(R.id.btn_remove)
         imageView.setOnClickListener { removeView(ingredientView) }
 
         layout_list.addView(ingredientView)
+        ingredientName.requestFocus()
+
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(ingredientName, InputMethodManager.SHOW_IMPLICIT)
     }
 
     private fun pickImage() {
@@ -78,10 +88,18 @@ class RecipeCreation : AppCompatActivity(), View.OnClickListener {
         if (selectedImage == null) selectedImage = (iv_pick_image.drawable as BitmapDrawable).bitmap
 
         if (et_recipe_name.text.toString() == "") {
-            Toast.makeText(this,"Ошибка при создании рецепта. Поле с названием рецепта должно быть заполнено!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this,
+                "Ошибка при создании рецепта. Поле с названием рецепта должно быть заполнено!",
+                Toast.LENGTH_LONG).show()
         }
          else {
-            dataBaseHelper.addRecipeToTable(Recipe(et_recipe_name.text.toString(), et_recipe_description.text.toString(), getIngredients(), getIngredientsAmount(), convertToBase64(selectedImage), et_full_recipe.text.toString()))
+            dataBaseHelper.addRecipeToTable(Recipe(et_recipe_name.text.toString(),
+                et_recipe_description.text.toString(),
+                getIngredients(),
+                getIngredientsAmount(),
+                convertToBase64(
+                    selectedImage),
+                et_full_recipe.text.toString()))
             val intent = Intent(this, MainActivity::class.java)
                 .putExtra("Created", true)
             startActivity(intent)
